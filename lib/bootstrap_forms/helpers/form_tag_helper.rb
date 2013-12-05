@@ -30,7 +30,7 @@ module BootstrapForms
           @field_options = field_options(args)
           @args = args
 
-          control_group_div do
+          form_group_div do
             label_field + input_div do
               extras { send(method_name.to_sym, name, *(@args << @field_options)) }
             end
@@ -43,7 +43,7 @@ module BootstrapForms
         @field_options = field_options(args)
         @args = args
 
-        control_group_div do
+        form_group_div do
           label_field + input_div do
             extras do
               content_tag(:span, :class => 'uneditable-input') do

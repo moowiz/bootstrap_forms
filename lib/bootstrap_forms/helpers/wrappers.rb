@@ -1,10 +1,10 @@
 module BootstrapForms
   module Helpers
     module Wrappers
-      BOOTSTRAP_OPTIONS = [ :label, :help_inline, :error, :success, :warning, :help_block, :prepend, :append, :append_button, :control_group ]
+      BOOTSTRAP_OPTIONS = [ :label, :help_inline, :error, :success, :warning, :help_block, :prepend, :append, :append_button, :form_group ]
 
       private
-      def control_group_div(&block)
+      def form_group_div(&block)
         field_errors = error_string
         if @field_options[:error]
           (@field_options[:error] << ", " << field_errors) if field_errors
@@ -13,19 +13,19 @@ module BootstrapForms
         end
 
         klasses = []
-        klasses << 'control-group' unless @field_options[:control_group] == false
+        klasses << 'control-group' unless @field_options[:form_group] == false
         klasses << 'error' if @field_options[:error]
         klasses << 'success' if @field_options[:success]
         klasses << 'warning' if @field_options[:warning]
         klasses << 'required' if @field_options.merge(required_attribute)[:required]
 
-        control_group_options = {}
-        control_group_options[:class] = klasses if !klasses.empty?
+        form_group_options = {}
+        form_group_options[:class] = klasses if !klasses.empty?
 
-        if @field_options[:control_group] == false
+        if @field_options[:form_group] == false
           yield
         else
-          content_tag(:div, control_group_options, &block)
+          content_tag(:div, form_group_options, &block)
         end
       end
 
@@ -66,8 +66,8 @@ module BootstrapForms
       def input_div(&block)
         content_options = {}
         content_options[:class] = 'controls'
-        if @field_options[:control_group] == false
-          @field_options.delete :control_group
+        if @field_options[:form_group] == false
+          @field_options.delete :form_group
           write_input_div(&block)
         else
           content_tag(:div, :class => 'controls') do
@@ -94,7 +94,7 @@ module BootstrapForms
           return ''.html_safe
         else
           label_options = {}
-          label_options[:class] = 'control-label' unless @field_options[:control_group] == false
+          label_options[:class] = 'control-label' unless @field_options[:form_group] == false
           if respond_to?(:object)
              label(@name, block_given? ? block : @field_options[:label], label_options)
            else

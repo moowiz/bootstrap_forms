@@ -69,7 +69,7 @@ module BootstrapForms
         @field_options = field_options(options)
         @args = options
 
-        control_group_div do
+        form_group_div do
           label_field + input_div do
             options.merge!(@field_options.merge(required_attribute))
             input_append = (options[:append] || options[:prepend] || options[:append_button]) ? true : nil
@@ -84,7 +84,7 @@ module BootstrapForms
       @field_options = field_options(args)
       @args = args
 
-      control_group_div do
+      form_group_div do
         input_div do
           @field_options.merge!(required_attribute)
           if @field_options[:label] == false || @field_options[:label] == ''
@@ -104,7 +104,7 @@ module BootstrapForms
     def radio_buttons(name, values = {}, opts = {})
       @name = name
       @field_options = @options.slice(:namespace, :index).merge(opts.merge(required_attribute))
-      control_group_div do
+      form_group_div do
         label_field + input_div do
           klasses = 'radio'
           klasses << ' inline' if @field_options.delete(:inline) == true
@@ -131,7 +131,7 @@ module BootstrapForms
       @field_options = field_options(args)
       @args = args
 
-      control_group_div do
+      form_group_div do
         label_field + input_div do
           options = @field_options.except(*BOOTSTRAP_OPTIONS).merge(required_attribute)
           # Since we're using check_box_tag() we may have to lookup the instance ourselves
@@ -155,7 +155,7 @@ module BootstrapForms
       @field_options = field_options(args)
       @args = args
 
-      control_group_div do
+      form_group_div do
         label_field + input_div do
           options = @field_options.merge(required_attribute)
           buttons = records.collect do |record|
@@ -175,7 +175,7 @@ module BootstrapForms
       @field_options = field_options(args)
       @args = args
 
-      control_group_div do
+      form_group_div do
         label_field + input_div do
           extras do
             value = @field_options.delete(:value)
