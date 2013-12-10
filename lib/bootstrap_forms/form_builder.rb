@@ -3,12 +3,17 @@ module BootstrapForms
     require_relative 'helpers/wrappers'
     include BootstrapForms::Helpers::Wrappers
 
+    def initialize(object_name, object, template, options, block=nil)
+      @horizontal = options.delete(:horizontal)
+      super
+    end
+
     delegate :content_tag, :hidden_field_tag, :check_box_tag, :radio_button_tag, :button_tag, :link_to, :to => :@template
 
     def error_messages
       if object.try(:errors) and object.errors.full_messages.any?
         content_tag(:div, :class => 'alert alert-block alert-error validation-errors') do
-          content_tag(:h4, I18n.t('bootstrap_forms.errors.header', :model => object.class.model_name.human), :class => 'alert-heading') +
+          content_tag(:h4, 'bootstrap_forms.errors.header', :class => 'alert-heading') +
           content_tag(:ul) do
             object.errors.full_messages.map do |message|
               content_tag(:li, message)
@@ -62,11 +67,19 @@ module BootstrapForms
           end
         end
 
+
         # Add options hash to argument array if its empty
         raw_args << options if raw_args.length == 0
 
+        if raw_args[-1].include? :class
+          raw_args[-1][:class] += ' form-control'
+        else
+          raw_args[-1][:class] = 'form-control'
+        end
+
         @name = name
         @field_options = field_options(options)
+        @is_field = method_name != "text_area"
         @args = options
 
         form_group_div do

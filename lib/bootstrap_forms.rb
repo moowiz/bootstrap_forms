@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'bootstrap_forms/engine' if defined?(::Rails)
+require_relative 'bootstrap_forms/engine' if defined?(::Rails)
 
 module BootstrapForms
   require_relative 'bootstrap_forms/engine'
